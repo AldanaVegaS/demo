@@ -1,0 +1,287 @@
+@prefix rr:   <http://www.w3.org/ns/r2rml#> .
+@prefix rml:  <http://semweb.mmlab.be/ns/rml#> .
+@prefix ql:   <http://semweb.mmlab.be/ns/ql#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix nw:   <http://example.org/northwind/ontology#> .
+
+<#CustomerMap>
+    a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/customers.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/customer/{customer_id}" ;
+        rr:class nw:Customer
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:customerId ;
+        rr:objectMap [ rml:reference "customer_id" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:companyName ;
+        rr:objectMap [ rml:reference "company_name" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:contactName ;
+        rr:objectMap [ rml:reference "contact_name" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:city ;
+        rr:objectMap [ rml:reference "city" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:country ;
+        rr:objectMap [ rml:reference "country" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:phone ;
+        rr:objectMap [ rml:reference "phone" ; rr:datatype xsd:string ]
+    ] .
+
+
+<#SupplierMap>
+    a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/suppliers.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/supplier/{supplier_id}" ;
+        rr:class nw:Supplier
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:supplierId ;
+        rr:objectMap [ rml:reference "supplier_id" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:companyName ;
+        rr:objectMap [ rml:reference "company_name" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:country ;
+        rr:objectMap [ rml:reference "country" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:city ;
+        rr:objectMap [ rml:reference "city" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:phone ;
+        rr:objectMap [ rml:reference "phone" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:contactName ;
+        rr:objectMap [ rml:reference "contact_name" ; rr:datatype xsd:string ]
+    ] .
+
+
+
+<#CategoryMap>
+    a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/categories.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/category/{category_id}" ;
+        rr:class nw:Category
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:categoryId ;
+        rr:objectMap [ rml:reference "category_id" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:categoryName ;
+        rr:objectMap [ rml:reference "category_name" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:description ;
+        rr:objectMap [ rml:reference "description" ; rr:datatype xsd:string ]
+    ] .
+
+
+
+<#ProductMap>
+    a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/products.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/product/{product_id}" ;
+        rr:class nw:Product
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:productId ;
+        rr:objectMap [ rml:reference "product_id" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:productName ;
+        rr:objectMap [ rml:reference "product_name" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:unitPrice ;
+        rr:objectMap [ rml:reference "unit_price" ; rr:datatype xsd:decimal ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:unitsInStock ;
+        rr:objectMap [ rml:reference "units_in_stock" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:discontinued ;
+        rr:objectMap [ rml:reference "discontinued" ; rr:datatype xsd:boolean ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:category ;
+        rr:objectMap [
+            rr:parentTriplesMap <#CategoryMap> ;
+            rr:joinCondition [
+                rr:child "category_id" ;
+                rr:parent "category_id"
+            ]
+        ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:supplier ;
+        rr:objectMap [
+            rr:parentTriplesMap <#SupplierMap> ;
+            rr:joinCondition [
+                rr:child "supplier_id" ;
+                rr:parent "supplier_id"
+            ]
+        ]
+    ] .
+
+
+
+<#OrderMap>
+    a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/orders.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/order/{order_id}" ;
+        rr:class nw:Order
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:orderId ;
+        rr:objectMap [ rml:reference "order_id" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:orderDate ;
+        rr:objectMap [ rml:reference "order_date" ; rr:datatype xsd:date ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:requiredDate ;
+        rr:objectMap [ rml:reference "required_date" ; rr:datatype xsd:date ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:shipCountry ;
+        rr:objectMap [ rml:reference "ship_country" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:freight ;
+        rr:objectMap [ rml:reference "freight" ; rr:datatype xsd:decimal ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:customer ;
+        rr:objectMap [
+            rr:parentTriplesMap <#CustomerMap> ;
+            rr:joinCondition [
+                rr:child "customer_id" ;
+                rr:parent "customer_id"
+            ]
+        ]
+    ] .
+
+
+
+<#OrderDetailMap>
+    a rr:TriplesMap ;
+
+    rml:logicalSource [
+        rml:source "data/order_details.csv" ;
+        rml:referenceFormulation ql:CSV
+    ] ;
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/orderdetail/{order_id}/{product_id}" ;
+        rr:class nw:OrderDetail
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:unitPrice ;
+        rr:objectMap [ rml:reference "unit_price" ; rr:datatype xsd:decimal ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:quantity ;
+        rr:objectMap [ rml:reference "quantity" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:discount ;
+        rr:objectMap [ rml:reference "discount" ; rr:datatype xsd:decimal ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:order ;
+        rr:objectMap [
+            rr:parentTriplesMap <#OrderMap> ;
+            rr:joinCondition [
+                rr:child "order_id" ;
+                rr:parent "order_id"
+            ]
+        ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:product ;
+        rr:objectMap [
+            rr:parentTriplesMap <#ProductMap> ;
+            rr:joinCondition [
+                rr:child "product_id" ;
+                rr:parent "product_id"
+            ]
+        ]
+    ] .
