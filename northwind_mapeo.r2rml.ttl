@@ -1,0 +1,270 @@
+@prefix rr:   <http://www.w3.org/ns/r2rml#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix nw:   <http://example.org/northwind/ontology#> .
+
+<#CustomerMap>
+    a rr:TriplesMap;
+
+    rr:logicalTable [ rr:tableName "customers" ];
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/customer/{customer_id}";
+        rr:class nw:Customer
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate nw:customerId ;
+        rr:objectMap [ rr:column "customer_id"; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:companyName;
+        rr:objectMap [ rr:column "company_name"; rr:datatype xsd:string]
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate nw:contactName;
+        rr:objectMap [ rr:column "contact_name"; rr:datatype xsd:string]
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate nw:city;
+        rr:objectMap [ rr:column "city"; rr:datatype xsd:string]
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate nw:country;
+        rr:objectMap [ rr:column "country"; rr:datatype xsd:string]
+    ];
+
+    rr:predicateObjectMap [
+        rr:predicate nw:phone;
+        rr:objectMap [ rr:column "phone" ; rr:datatype xsd:string ]
+    ].
+
+
+
+<#SupplierMap>
+    a rr:TriplesMap ;
+
+    rr:logicalTable [ rr:tableName "suppliers" ] ;
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/supplier/{supplier_id}" ;
+        rr:class nw:Supplier
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:supplierId ;
+        rr:objectMap [ rr:column "supplier_id" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:companyName ;
+        rr:objectMap [ rr:column "company_name" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:country ;
+        rr:objectMap [ rr:column "country" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:city ;
+        rr:objectMap [ rr:column "city" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:phone ;
+        rr:objectMap [ rr:column "phone" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:contactName ;
+        rr:objectMap [ rr:column "contact_name" ; rr:datatype xsd:string ]
+    ] .
+
+
+
+<#CategoryMap>
+    a rr:TriplesMap ;
+
+    rr:logicalTable [ rr:tableName "categories" ] ;
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/category/{category_id}" ;
+        rr:class nw:Category
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:categoryId ;
+        rr:objectMap [ rr:column "category_id" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:categoryName ;
+        rr:objectMap [ rr:column "category_name" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:description ;
+        rr:objectMap [ rr:column "description" ; rr:datatype xsd:string ]
+    ] .
+
+
+
+<#ProductMap>
+    a rr:TriplesMap ;
+
+    rr:logicalTable [ rr:tableName "products" ] ;
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/product/{product_id}" ;
+        rr:class nw:Product
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:productId ;
+        rr:objectMap [ rr:column "product_id" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:productName ;
+        rr:objectMap [ rr:column "product_name" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:unitPrice ;
+        rr:objectMap [ rr:column "unit_price" ; rr:datatype xsd:decimal ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:unitsInStock ;
+        rr:objectMap [ rr:column "units_in_stock" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:discontinued ;
+        rr:objectMap [ rr:column "discontinued" ; rr:datatype xsd:boolean ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:category ;
+        rr:objectMap [
+            rr:parentTriplesMap <#CategoryMap> ;
+            rr:joinCondition [
+                rr:child "category_id" ;
+                rr:parent "category_id"
+            ]
+        ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:supplier ;
+        rr:objectMap [
+            rr:parentTriplesMap <#SupplierMap> ;
+            rr:joinCondition [
+                rr:child "supplier_id" ;
+                rr:parent "supplier_id"
+            ]
+        ]
+    ] .
+
+
+
+<#OrderMap>
+    a rr:TriplesMap ;
+
+    rr:logicalTable [ rr:tableName "orders" ] ;
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/order/{order_id}" ;
+        rr:class nw:Order
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:orderId ;
+        rr:objectMap [ rr:column "order_id" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:orderDate ;
+        rr:objectMap [ rr:column "order_date" ; rr:datatype xsd:date ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:requiredDate ;
+        rr:objectMap [ rr:column "required_date" ; rr:datatype xsd:date ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:shipCountry ;
+        rr:objectMap [ rr:column "ship_country" ; rr:datatype xsd:string ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:freight ;
+        rr:objectMap [ rr:column "freight" ; rr:datatype xsd:decimal ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:customer ;
+        rr:objectMap [
+            rr:parentTriplesMap <#CustomerMap> ;
+            rr:joinCondition [
+                rr:child "customer_id" ;
+                rr:parent "customer_id"
+            ]
+        ]
+    ] .
+
+
+
+<#OrderDetailMap>
+    a rr:TriplesMap ;
+
+    rr:logicalTable [ rr:tableName "order_details" ] ;
+
+    rr:subjectMap [
+        rr:template "http://example.org/northwind/orderdetail/{order_id}/{product_id}" ;
+        rr:class nw:OrderDetail
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:unitPrice ;
+        rr:objectMap [ rr:column "unit_price" ; rr:datatype xsd:decimal ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:quantity ;
+        rr:objectMap [ rr:column "quantity" ; rr:datatype xsd:integer ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:discount ;
+        rr:objectMap [ rr:column "discount" ; rr:datatype xsd:decimal ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:order ;
+        rr:objectMap [
+            rr:parentTriplesMap <#OrderMap> ;
+            rr:joinCondition [
+                rr:child "order_id" ;
+                rr:parent "order_id"
+            ]
+        ]
+    ] ;
+
+    rr:predicateObjectMap [
+        rr:predicate nw:product ;
+        rr:objectMap [
+            rr:parentTriplesMap <#ProductMap> ;
+            rr:joinCondition [
+                rr:child "product_id" ;
+                rr:parent "product_id"
+            ]
+        ]
+    ] .
+
+
