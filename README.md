@@ -111,6 +111,11 @@ Desde la carpeta del proyecto:
 python demo.py
 ```
 
+o 
+```bash
+python3 -m morph_kgc config.ini
+```
+
 ### Salida esperada en consola
 
 ```
