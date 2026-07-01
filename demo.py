@@ -1,11 +1,3 @@
-"""
-demo_northwind.py
-Ejecuta Morph-KGC sobre Northwind y hace algunas queries SPARQL de ejemplo.
-
-Instalación previa:
-    pip install morph-kgc psycopg2-binary
-"""
-
 import morph_kgc
 
 print("Materializando grafo RDF desde Northwind...")
