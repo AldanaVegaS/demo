@@ -1,0 +1,118 @@
+Consultas SQL
+
+* Cantidad de customers
+Postgres
+SELECT COUNT(*) FROM customers;
+
+
+
+GraphDB
+PREFIX ex: <http://example.org/northwind/ontology#>
+
+SELECT (COUNT(?c) AS ?cantidad)
+WHERE {
+    ?c a ex:Customer .
+}
+
+--------------------------------------------------
+* Productos con categoría
+Postgres
+SELECT
+    p.product_name,
+    c.category_name
+FROM products p
+JOIN categories c
+ON p.category_id = c.category_id
+ORDER BY p.product_name;
+
+
+
+GraphDB
+PREFIX ex: <http://example.org/northwind/ontology#>
+
+SELECT ?nombre ?categoria
+WHERE {
+
+    ?p a ex:Product ;
+       ex:productName ?nombre ;
+       ex:category ?c .
+
+    ?c ex:categoryName ?categoria .
+}
+ORDER BY ?nombre
+
+-----------------------------------------------------------
+* Ordenes con clientes
+Postgres
+SELECT
+    o.order_id,
+    c.company_name
+FROM orders o
+JOIN customers c
+ON o.customer_id = c.customer_id
+ORDER BY o.order_id
+LIMIT 10;
+
+
+
+GraphDB
+PREFIX ex: <http://example.org/northwind/ontology#>
+
+SELECT ?orden ?cliente
+WHERE {
+
+    ?orden a ex:Order ;
+           ex:customer ?c .
+
+    ?c ex:companyName ?cliente .
+}
+ORDER BY ?orden
+LIMIT 10
+
+-------------------------------------------------------
+
+* Productos vendidos por orden
+Postgres
+SELECT
+    od.order_id,
+    p.product_name,
+    od.quantity
+FROM order_details od
+JOIN products p
+ON od.product_id = p.product_id
+ORDER BY od.order_id
+LIMIT 10;
+
+
+
+GraphDB
+PREFIX ex: <http://example.org/northwind/ontology#>
+
+SELECT ?orden ?producto ?cantidad
+WHERE {
+
+    ?detalle a ex:OrderDetail ;
+             ex:order ?orden ;
+             ex:product ?p ;
+             ex:quantity ?cantidad .
+
+    ?p ex:productName ?producto .
+}
+ORDER BY ?orden
+LIMIT 10
+
+--------------------------------------------------------
+
+* Cantidad de productos
+Postgres
+SELECT COUNT(*) FROM products;
+
+
+
+GraphDB
+PREFIX ex: <http://example.org/northwind/ontology#>
+
+SELECT (COUNT(?p) AS ?cantidad)
+WHERE {
+    ?p a ex:Product .
+}
